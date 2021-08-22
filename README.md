@@ -16,6 +16,16 @@ Demo: [https://app.swaggerhub.com/apis/Test8685/cashback-api/1.0.0](https://app.
 
 *Por padrão o projeto irá rodar na porta: 8080( [http://localhost:8080](http://localhost:8080) ), isso também é uma variável no ```.env```.
 
+## Use o docker ;)
+Caso você tenha o docker e docker-compose instalados, siga os comandos:
+1. ```docker-compose build```
+2. ```docker-compose up```, isso pode demorar um pouco dependendo do seu PC.
+Aguarde as mensaegens: 
+ * ```nodejs-api    | app listening on port 8080``` 
+ * ```nodejs-api    | MongoDB connected``` 
+
+*Se quiser alterar as portas de conexão utilizando docker, faça isso no arquivo ```docker-compose.yml```
+
 ## Como usar remoto:
  Acesse a documentação do swagger e divirta-se ;)
  - [https://app.swaggerhub.com/apis/Test8685/cashback-api/1.0.0](https://app.swaggerhub.com/apis/Test8685/cashback-api/1.0.0) 
