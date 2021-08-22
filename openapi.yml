@@ -1,0 +1,348 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Cashback API
+  description: 'Desafio – “Eu revendedor ‘O Boticário’ quero ter benefícios deacordo com o meu volume de vendas”.'
+servers:
+  - url: 'http://chargeback-api.us-east-1.elasticbeanstalk.com'
+    description: 'Testando online ;)'
+paths:
+  /:
+    get:
+      summary: 'Verifique o status da API'
+      operationId: getVersion
+      tags: 
+        - General
+      responses:
+        '200':
+          description: Quando retornar sucesso será exibida a versão e nome da api.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseSuccess'
+        x-400|500:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseErrors'
+                
+  /register:
+    post:
+      summary: 'Criar um novo revendedor(a)'
+      operationId: postRegister
+      tags:
+        - Revendedor(a)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Seller'
+                
+      responses:
+        '200':
+          description: Retorna o revendedor criado em caso de sucesso.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseSuccess'
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Seller'
+        x-400|500:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseErrors'
+  /signin:
+    post:
+      summary: 'Autenticação do revendedor(a)'
+      description: 'Utilize esta rota para conseguir um toke JWT, necessário para as outras rotas.'
+      operationId: postSignIn
+      tags:
+        - Revendedor(a)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignIn'
+                
+      responses:
+        '200':
+          description: Retorna o token de acesso Bearer JWT
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseSuccess'
+                properties:
+                  data:
+                    $ref: '#/components/schemas/ResponseSignIn'
+        x-400|500:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseErrors' 
+                
+  /purchase:
+    post:
+      summary: 'Cadastrar uma nova compra para um(a) revendedor(a)'
+      description: "Está rota ncessita de authorização, gere um JWT token em /signin antes."
+      operationId: postPurchase
+      tags:
+        - Compras
+      security:
+        - bearerAuth: []
+          
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Purchase' 
+      responses:
+        '200':
+          description: Retorna a compra efetuada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseSuccess'
+                properties:
+                  data:
+                    $ref: '#/components/schemas/ResponsePurchase'
+        x-400|500:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseErrors'  
+
+  /seller/valid:
+    get:
+      summary: 'Verificar se um(a) revendedor(a) está cadastrado(a)'
+      description: "Está rota ncessita de authorização, gere um JWT token em /signin antes."
+      operationId: getSellerValid
+      tags:
+        - Revendedor(a)
+      security:
+        - bearerAuth: []
+          
+      parameters: 
+        - in: query
+          description: CPF do revendedor(a)
+          required: true
+          name: document
+          schema:
+            type: string
+        
+      responses:
+        '200':
+          description: Retorna se o revendedor é válido ou não
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseSuccess'
+                properties:
+                  data:
+                    $ref: '#/components/schemas/ResponseSellerValid'
+        x-400|500:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseErrors'  
+
+  /purchases:
+    get:
+      summary: 'Lista de todas as compras efetuadas'
+      description: "Está rota ncessita de authorização, gere um JWT token em /signin antes."
+      operationId: getPurchases
+      tags:
+        - Compras
+      security:
+        - bearerAuth: []
+        
+      responses:
+        '200':
+          description: Retorna a lista de compras efetuadas até o momento.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseSuccess'
+                properties:
+                  data:
+                    type: array
+                    default: []
+        x-400|500:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseErrors'  
+
+  /total-cashback:
+    get:
+      summary: 'Retorna o total acumulado em vendas de um revendedor(a)'
+      description: "Está rota ncessita de authorização, gere um JWT token em /signin antes."
+      operationId: getTotalCashback
+      tags:
+        - Revendedor(a)
+      security:
+        - bearerAuth: []
+          
+      parameters: 
+        - in: query
+          description: CPF do revendedor(a)
+          required: true
+          name: document
+          schema:
+            type: string
+        
+      responses:
+        '200':
+          description: Retorna o total vindo da API Boticário
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseSuccess'
+                properties:
+                  data:
+                    $ref: '#/components/schemas/ResponseTotalCashback'
+        x-400|500:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseErrors'
+
+                
+components:
+
+  securitySchemes:
+    bearerAuth:            
+      type: http
+      scheme: bearer
+      bearerFormat: JWT 
+      
+  schemas:
+    Seller:
+      type: object
+      required:
+        - name
+        - email
+        - document
+        - password
+      properties:
+        name:
+          type: string
+          description: Você deve inserir nome e sobrenome
+        email:
+          type: string
+        password:
+          type: string
+        document:
+          type: string
+    Purchase:
+      type: object
+      required:
+        - code
+        - value
+        - document
+        - date
+      properties:
+        code:
+          type: string
+        value:
+          type: string
+          format: decimal(10.2)
+          description: O valor deve ser seguir o exemplo 10.00 para R$10,00
+        document:
+          type: string
+        date:
+          type: string   
+          format: date("YYYY-MM-DD")
+          description: "Data no formato YYYY-MM-DD"
+    ResponsePurchase:
+      type: object
+      required:
+        - _id 
+        - code
+        - value
+        - document
+        - date
+        - cashbackPercent
+        - cashbackValue
+      properties:
+        _id:
+          type: string
+        code:
+          type: string
+        value:
+          type: string
+        document:
+          type: string
+        date:
+          type: string
+        cashbackPercent:
+          type: number
+        cashbackValue:
+          type: number  
+          
+    SignIn:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+  
+    ResponseSignIn:
+      type: object
+      required:
+        - accessToken
+      properties:
+        accessToken:
+          type: string
+ 
+    ResponseSellerValid:
+      type: object
+      required:
+        - isValid
+      properties:
+        isValid:
+          type: boolean 
+          
+    ResponseTotalCashback:
+      type: object
+      required:
+        - total
+      properties:
+        isValid:
+          type: number           
+          
+    ResponseSuccess:
+      type: object
+      required:
+        - data
+        - success
+      properties:
+        data:
+          nullable: true
+          oneOf:
+            - type: object
+            - type: array
+        success:
+          description: 'Retorna "true" para as requisições de sucesso.'
+          type: boolean
+            
+    ResponseErrors:
+      type: object
+      required:
+        - error
+        - success
+      properties:
+        error:
+          type: string
+        success:
+          description: 'Retorna "false" para as requisições com erro.'
+          default: false
+          type: boolean
