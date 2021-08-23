@@ -10,11 +10,12 @@ Banco de Dados: MongoDB
 Demo: [https://app.swaggerhub.com/apis/Test8685/cashback-api/1.0.0](https://app.swaggerhub.com/apis/Test8685/cashback-api/1.0.0)
 
 ## Como usar localmente:
-1. Clone este repositório e execute o comando: ```npm install && npm run dev```.
-2. Você precisa de uma conexão com o MongoDB
-3. Você pode alterar a conexão de acesso do MongoDB no arquivo ```.env```.
+1. Clone este repositório e execute o comando: ```npm install```.
+2. Clone este repositório e execute o comando: ```npm run dev```.
+3. Você precisa de uma conexão com o MongoDB
+4. Você pode alterar a conexão de acesso do MongoDB no arquivo ```.env```.
 
-*O arquivo ```.env``` foi enviado para faciliar a vida da pessoa que irá testar, em um ambiente real isso é removido do repositório.
+*O arquivo ```.env``` foi enviado para facilitar a vida da pessoa que irá testar, em um ambiente real isso é removido do repositório.
 
 *Por padrão o projeto irá rodar na porta: 8080( [http://localhost:8080](http://localhost:8080) ), isso também é uma variável no ```.env```.
 
