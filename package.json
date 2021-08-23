@@ -1,6 +1,6 @@
 {
   "name": "cashback-api",
-  "version": "1.0.0",
+  "version": "1.2.2",
   "description": "Solução de cashback para revendedores()\u001b[Das\u001b[C\u001b[D) \"O Boticário\"",
   "main": "index.ts",
   "scripts": {

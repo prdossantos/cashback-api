@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  version: 1.0.0
+  version: 1.2.2
   title: Cashback API
   description: 'Desafio – “Eu revendedor ‘O Boticário’ quero ter benefícios deacordo com o meu volume de vendas”.'
 servers:
