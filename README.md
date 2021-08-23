@@ -14,6 +14,8 @@ Demo: [https://app.swaggerhub.com/apis/Test8685/cashback-api/1.0.0](https://app.
 2. Você precisa de uma conexão com o MongoDB
 3. Você pode alterar a conexão de acesso do MongoDB no arquivo ```.env```.
 
+*O arquivo ```.env``` foi enviado para faciliar a vida da pessoa que irá testar, em um ambiente real isso é removido do repositório.
+
 *Por padrão o projeto irá rodar na porta: 8080( [http://localhost:8080](http://localhost:8080) ), isso também é uma variável no ```.env```.
 
 ## Use o docker ;)

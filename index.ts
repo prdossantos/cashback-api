@@ -5,6 +5,13 @@ import cors from 'cors';
 import routes from './src/routes';
 import mdbConnection from './src/mongo.connection';
 import { responseError } from './src/helper';
+const pino = require('pino-http')()
+const logger = require('pino')({
+    prettyPrint: {
+      levelFirst: true
+    },
+    prettifier: require('pino-pretty')
+})
 
 const app = express();
 
@@ -17,30 +24,21 @@ const port = process.env.NODE_PORT || '8080';
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 app.use(compression())
-
+app.use(pino)
 app.use(cors())
 
 app.listen(port, () => {
-    console.log(`app listening on port ${port}`);
+    logger.info(`app listening on port ${port}`)
 
     mdbConnection().then( connection => {
-        console.log('MongoDB connected')
+        logger.info(`MongoDB connected`)
     }).catch( e => {
-        console.log(`Mongodb connection error: ${e.message}`)
+        logger.error(`Mongodb connection error: ${e.message}`)
     })
 })
 
-app.use((req, res, next) => {
-    // console.log('Time:', Date.now());
-    // console.log('ENV:', app_env)
-
-    next();
-});
-
-
 //Routes
 app.use('/', routes);
-
 
 //Response Middleware
 app.use((req, res, next) => {

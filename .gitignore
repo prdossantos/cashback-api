@@ -352,3 +352,5 @@ MigrationBackup/
 build/
 coverage/
 data
+
+package-lock.json
