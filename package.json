@@ -1,6 +1,6 @@
 {
   "name": "cashback-api",
-  "version": "1.0.0",
+  "version": "1.2.2",
   "description": "Solução de cashback para revendedores()\u001b[Das\u001b[C\u001b[D) \"O Boticário\"",
   "main": "index.ts",
   "scripts": {
@@ -38,7 +38,6 @@
   },
   "devDependencies": {
     "@jest-mock/express": "^1.4.4",
-    "@types/axios-mock-adapter": "^1.10.0",
     "@types/bcryptjs": "^2.4.2",
     "@types/compression": "^1.7.1",
     "@types/cors": "^2.8.12",
@@ -46,9 +45,6 @@
     "@types/express-pino-logger": "^4.0.2",
     "@types/jest": "^27.0.1",
     "@types/jsonwebtoken": "^8.5.5",
-    "@types/mockingoose": "^2.13.0",
-    "@types/moment": "^2.13.0",
-    "@types/mongoose": "^5.11.97",
     "@types/node": "^16.7.1",
     "axios-mock-adapter": "^1.20.0",
     "mockingoose": "^2.15.2",
