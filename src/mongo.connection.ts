@@ -1,10 +1,17 @@
 import mongoose, { Mongoose } from 'mongoose';
-
+const logger = require('pino')({
+    prettyPrint: {
+      levelFirst: true
+    },
+    prettifier: require('pino-pretty')
+})
 const mdbConnection = (): Promise<Mongoose> => {
 
     const connection = mongoose.connect(`${process.env.MONGODB_NEW_URL_PARSER}`, { useUnifiedTopology: true, useNewUrlParser: true });
 
-    mongoose.connection.on('connecting', () => console.log('MongoDB is trying to connect'))
+    mongoose.connection.on('connecting', () =>{ 
+        logger.info('MongoDB is trying to connect')
+    })
 
     return connection;
 }

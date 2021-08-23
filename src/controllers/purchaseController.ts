@@ -3,6 +3,12 @@ import { responseError, responseSuccess, Status } from '../helper';
 import { isDBConnected } from '../mongo.connection';
 import purchaseModel, { calcChargebackPercent, calcChargebackValue, Purchase, totalSales } from '../models/purchaseModel';
 import sellerModel from '../models/sellerModel';
+const logger = require('pino')({
+    prettyPrint: {
+      levelFirst: true
+    },
+    prettifier: require('pino-pretty')
+})
 
 class PurchaseController {
     
@@ -38,6 +44,7 @@ class PurchaseController {
             const saved = await purchase.save();
             purchase._id = saved._id;
         } catch( e ) {
+            logger.error(e.message)
             return res.status(400).json(responseError(e.message));
         }
 

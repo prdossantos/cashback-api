@@ -5,6 +5,12 @@ import { responseError, responseSuccess, unmaskDocument } from '../helper';
 import { isDBConnected } from '../mongo.connection';
 import axios from 'axios';
 import { sign } from 'jsonwebtoken';
+const logger = require('pino')({
+    prettyPrint: {
+      levelFirst: true
+    },
+    prettifier: require('pino-pretty')
+})
 
 class SellerController {
     
@@ -44,6 +50,7 @@ class SellerController {
                 return res.status(400).json(responseError('Your password is invalid'));
             }
         } catch( e ) {
+            logger.error(e.message)
             return res.status(400).json(responseError(e.message));
         }
 
@@ -74,6 +81,7 @@ class SellerController {
             const saved = await seller.save();
             seller._id = saved._id;
         } catch( e ) {
+            logger.error(e.message)
             return res.status(400).json(responseError(e.message));
         }
 
@@ -131,7 +139,9 @@ class SellerController {
                 total = response.data.body.credit
             }
 
-        } catch ( e ) { console.log( e ) }
+        } catch ( e ) { 
+            logger.error( e.message ) 
+        }
 
         return res.json(responseSuccess<any>({total}))
     }
