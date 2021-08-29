@@ -1,5 +1,5 @@
 # Api Rest Cashback
-Desafio – “Eu revendedor ‘O Boticário’ quero ter benefícios de acordo com o meu volume de vendas”. 
+App para adquirir benefícios de acordo com o meu volume de vendas. 
 
 
 ## Architecture:
@@ -7,11 +7,9 @@ Linguagem: NodeJs com framework ExpressJs
 
 Banco de Dados: MongoDB
 
-Demo: [https://app.swaggerhub.com/apis/Test8685/cashback-api/1.0.0](https://app.swaggerhub.com/apis/Test8685/cashback-api/1.0.0)
-
 ## Como usar localmente:
 1. Clone este repositório e execute o comando: ```npm install```.
-2. Clone este repositório e execute o comando: ```npm run dev```.
+2. Execute o comando: ```npm run dev```.
 3. Você precisa de uma conexão com o MongoDB
 4. Você pode alterar a conexão de acesso do MongoDB no arquivo ```.env```.
 
@@ -45,7 +43,6 @@ src/
 
 ## REST API Documentação:
 A documentação completa está: 
- - Swagger [https://app.swaggerhub.com/apis/Test8685/cashback-api/1.0.0](https://app.swaggerhub.com/apis/Test8685/cashback-api/1.0.0)
  - Localmente, acessando o arquivo ```./openapi.yml```.
 
 ## Como rodar os testes:
